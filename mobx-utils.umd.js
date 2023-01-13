@@ -841,6 +841,7 @@ function now(interval) {
 function createIntervalTicker(interval) {
     var subscriptionHandle;
     return fromResource(function (sink) {
+        sink(Date.now());
         subscriptionHandle = setInterval(function () { return sink(Date.now()); }, interval);
     }, function () {
         clearInterval(subscriptionHandle);
@@ -848,6 +849,7 @@ function createIntervalTicker(interval) {
 }
 function createAnimationFrameTicker() {
     var frameBasedTicker = fromResource(function (sink) {
+        sink(Date.now());
         function scheduleTick() {
             window.requestAnimationFrame(function () {
                 sink(Date.now());
